@@ -1,0 +1,25 @@
+{% extends 'blogSite/main.html' %}
+{% load custom_tags %}
+{% block title %} Home {%endblock%}
+{% block content %}
+
+<div>
+    <div class="posts">
+            <div class="each">
+            {% for post in posts %}
+            <h3><a href="{{post.get_absolute_url}}">{{post}}</a></h3>
+            {% if request.user.is_authenticated %}
+            <input data-postid="{{post.pk}}" type="submit" class="like-button" value="{% totalEmotion post %} {% likeIcon user post %}">
+            {% endif %}
+            published by {{post.author}} on {{post.publish}}
+            <p>{{post.body|truncatewords:30|linebreaks}}</p>
+            {% endfor %}
+            </div>
+    </div>
+
+    <div class="paginator">
+        {% include 'blogsite/paginate.html' with page=page_obj %}
+    </div>
+</div>
+
+{% endblock %}

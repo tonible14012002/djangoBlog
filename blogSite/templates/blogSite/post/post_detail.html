@@ -1,0 +1,42 @@
+{% extends 'blogSite/main.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block title %} Post {%endblock%}
+{% block content %}
+
+<div >
+    <div>
+        <div class="postpart">
+            <h2>{{post}}</h2>
+            {% if post.update == post.publish %}
+                published on {{post.publish}} by <a href="{{post.author.profile.get_absolute_url}}">{{post.author.profile.get_name}}</a>
+            {% else %}
+                updated on {{post.publish}} by <a href="{{post.author.profile.get_absolute_url}}">{{post.author.profile.get_name}}</a>
+            {% endif %}
+            <p>{{post.body|linebreaks}}</p>
+            <h5> {% comment_count post %} comments</h5>
+            <input data-postid="{{post.pk}}" type="submit" class="like-button" value="{% totalEmotion post %} {% likeIcon user post %}">
+            <hr>
+        </div>
+
+        <div class="commentpart" style="display: grid; grid-template-columns: 1fr 1fr;">
+            <div class="commentform">
+                {% include 'blogSite/post/form/comment.html' with form=commentForm %}
+            </div>
+            <div class="email-share">
+                {% include 'blogSite/post/form/share.html' with form=emailForm %}
+            </div>
+        </div>
+        <hr>
+
+        <div class="commentlist">
+            {% for comment in post.comments.all %}
+                <h3>{{comment}}</h3>
+                <ul style="list-style: none;">
+                    <li><small>{{comment.body}}</small></li>
+                </ul>
+            {% endfor %}
+        </div>    
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+
+<h3>Detail.</h3>
+<p>joined since {{user.profile.create}}</p>
+<ul>
+    <li><span>Email: {{user.email}}</span></li>
+    <li><span>date of birth: {{user.profile.date_of_birth}}</span></li>
+</ul>
+{% if user == request.user %}
+<p><a href="{% url 'account:profile_edit' %}">Edit your profile.</a></p>
+{% endif %}

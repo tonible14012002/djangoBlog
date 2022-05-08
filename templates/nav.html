@@ -1,0 +1,10 @@
+<span><h1> <a href="{% url 'blogsite:home' %}">This is my blog</a></h1></span>
+
+{% if request.user.is_authenticated %}
+    <span>Hello <a href="{{request.user.profile.get_absolute_url}}">{{request.user}}</a></span>
+    <span><a href="{% url 'account:logout' %}">Logout</a></span>
+{% else %}
+    <span><a href="{% url 'account:login' %}">Login</a> / </span>
+{% endif %}
+    <span> <a href="{% url 'account:register' %}">Register</a> /</span>
+    <hr>

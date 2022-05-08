@@ -1,0 +1,15 @@
+
+    <h2>Share</h2>
+    {% if sent %}
+    <h4>Post shared</h4>
+    <form action="" method="POST">
+        {% csrf_token %}
+    <input type="submit" name="redirect" value="Share another" id="">
+    </form>
+    {% else %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" name="share" value="share" id="">
+    </form>
+    {% endif %}

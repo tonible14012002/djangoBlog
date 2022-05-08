@@ -1,0 +1,8 @@
+{% load custom_tags %}
+<div>
+    <ul>
+        {% for post in posts %}
+        <li><a href="{{post.get_absolute_url}}">{{post}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
