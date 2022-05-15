@@ -1,16 +1,28 @@
 {% extends 'account/main.html' %}
 {% load custom_tags %}
 
-{% block content %}
-<img src="{{user.profile.avatar.url}}" alt="">
-<h2>{{user.profile.get_name}}</h2>
+{% block content %}\
+
+<div style="display: grid; grid-template-columns: 2fr 1fr;">
+    <div>
+        <img src="{{user.profile.avatar.url}}" alt="">
+        <h2>{{user.profile.get_name}}</h2>
+        <hr>
+        {% include 'account/profile/detail.html' with user=user %}
+    </div>
+
+    <div>
+        <h2>Post</h2>
+        <a href="{% url 'blogsite:post_create' %}">Add new post</a>
+        <ul>
+            <li><h4>Lastest Posts:</h4>{% latestPost 3 user %}</li>
+            <li><h4>most Commented posts</h4>{% mostCommentPost 3 user %}</li>
+            <li><h4>most Liked posts</h4>{% mostLikePost 3 user %}</li>
+        </ul>
+    </div>
+</div>
+
 <hr>
-{% include 'account/profile/detail.html' with user=user %}
-<hr>
-<h2>Post</h2>
-<ul>
-    <li><h4>Lastest Posts:</h4>{% latestPost 3 user %}</li>
-    <li><h4>most Commented posts</h4>{% mostCommentPost 3 user %}</li>
-    <li><h4>most Liked posts</h4>{% mostLikePost 3 user %}</li>
-</ul>
+
+
 {% endblock %}

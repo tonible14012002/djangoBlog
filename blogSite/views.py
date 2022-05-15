@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, Page, \
 from blog.settings import EMAIL_HOST_USER
 from .models import Emotion, Post, Comment
 from django.views.generic.list import ListView
-from .form import CommentForm, ShareForm
+from .form import CommentForm, PostCreationForm, ShareForm
 from blogSite import form
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
@@ -73,3 +73,14 @@ def post_like(request):
         total = Emotion.objects.filter(post=post).count()
     return JsonResponse({'liked':created, 'total':total},status=200)
 
+@login_required
+def post_create(request):
+    if request.method == 'POST':
+        form = PostCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(request,'account:profile')
+    else:
+        form = PostCreationForm()
+    context = {'form':form}
+    return render(request,'blogSite/post/post_create.html', context)
