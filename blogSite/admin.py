@@ -1,6 +1,6 @@
 import imp
 from django.contrib import admin
-from .models import Emotion, Post, Comment
+from .models import Post, Comment
 # Register your models here.
 
 
@@ -12,7 +12,3 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['name', 'create']
-
-@admin.register(Emotion)
-class EmotionAdmin(admin.ModelAdmin):
-    list_display = ['user', 'post', 'create']

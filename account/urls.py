@@ -22,5 +22,4 @@ urlpatterns = [
     path('profile/<slug:slug>/<int:pk>',views.profile, name='profile'),
     path('profile/edit/', views.profile_edit, name='profile_edit'),
     path('post_create/', views.post_create, name='post_create'),
-    
 ]

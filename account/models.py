@@ -19,7 +19,7 @@ class Profile(models.Model):
     update = models.DateTimeField(auto_now=True)
     date_of_birth = models.DateField(blank=True, null=True)
     slug = models.SlugField(max_length=20)
-    avatar = models.ImageField(upload_to='user/%y/%m/%d')
+    avatar = models.ImageField(upload_to='user/%y/%m/%d', blank=True, null=True)
 
     def __str__(self):
         fullname = self.user.first_name.strip() + ' ' + self.user.last_name.strip()

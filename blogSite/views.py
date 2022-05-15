@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core.paginator import Paginator, Page, \
     PageNotAnInteger, EmptyPage, InvalidPage
 from blog.settings import EMAIL_HOST_USER
-from .models import Emotion, Post, Comment
+from .models import Post, Comment
 from django.views.generic.list import ListView
 from .form import CommentForm, PostCreationForm, ShareForm
 from blogSite import form
@@ -63,16 +63,4 @@ def post_detail(request,year,month,day,pk,slug):
     context = {'post':post, 'commentForm':commentForm,\
          'emailForm':emailForm, 'sent':sent}
     return render(request,'blogSite/post/post_detail.html',context)
-
-@login_required
-def post_like(request):
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        post_id = data['post_id']
-        post = get_object_or_404(Post,pk=post_id)
-        newEmotion, created = Emotion.objects.get_or_create(post=post,user=request.user)
-        if not created:
-            newEmotion.delete()
-        total = Emotion.objects.filter(post=post).count()
-    return JsonResponse({'liked':created, 'total':total},status=200)
 

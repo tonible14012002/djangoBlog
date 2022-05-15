@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from code import interact
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
@@ -26,7 +27,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',Home,name='begin'),
     path('blogsite/',include('blogSite.urls',namespace='blogsite')),
-    path('account/', include('account.urls', namespace='account'))
+    path('account/', include('account.urls', namespace='account')),
+    path('interact/', include('interact.urls', namespace='interact'))
 
 ] 
 if settings.DEBUG:

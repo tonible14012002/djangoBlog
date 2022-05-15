@@ -5,7 +5,11 @@
 
 <div style="display: grid; grid-template-columns: 2fr 1fr;">
     <div>
+        {% if user.profile.avatar %}
         <img src="{{user.profile.avatar.url}}" alt="">
+        {% else %}
+        <img src="https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg" alt="">
+        {% endif %}
         <h2>{{user.profile.get_name}}</h2>
         <hr>
         {% include 'account/profile/detail.html' with user=user %}

@@ -11,7 +11,7 @@ for (let i = 0; i < button.length; i++){
 }
 
 function callAjax(post_id, button){
-    var url = '/blogsite/like/'
+    var url = '/interact/like/'
     fetch(url,{
         method:'POST',
         headers:{

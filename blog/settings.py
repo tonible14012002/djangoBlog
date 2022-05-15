@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     
     'account.apps.AccountConfig',
     'blogSite.apps.BlogsiteConfig',
+    'interact.apps.InteractConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

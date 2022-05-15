@@ -1,6 +1,7 @@
 {% extends 'blogSite/main.html' %}
 {% load static %}
 {% load custom_tags %}
+{% load interact_tags %}
 {% block title %} Post {%endblock%}
 {% block content %}
 
@@ -15,7 +16,7 @@
             {% endif %}
             <p>{{post.body|linebreaks}}</p>
             <h5> {% comment_count post %} comments</h5>
-            <input data-postid="{{post.pk}}" type="submit" class="like-button" value="{% totalEmotion post %} {% likeIcon user post %}">
+            <input data-postid="{{post.pk}}" type="submit" class="like-button" value="{% totalLikes post %} {% likeIcon user post %}">
             <hr>
         </div>
 

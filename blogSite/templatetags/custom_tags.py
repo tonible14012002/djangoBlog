@@ -1,6 +1,5 @@
-from pdb import post_mortem
 from django import template
-from ..models import Emotion, Post, Comment
+from ..models import Post, Comment
 from django.db.models import Q, Count
 
 register = template.Library()
@@ -39,30 +38,3 @@ def totalPost(user=None):
     if user:
         return Post.published.filter(user=user).count()
     return Post.published.count()
-
-@register.simple_tag
-def totalEmotion(post):
-    return post.emotions.count()
-
-
-@register.inclusion_tag('blogSite/post/feed.html')
-def mostLikePost(num, user=None):
-    if user:
-        posts = Post.published\
-            .filter(author=user)\
-            .annotate(
-                like_count = Count('emotions')
-            ).order_by('-like_count')[:num]
-    else:
-        posts = Post.published\
-            .annotate(
-                like_count = Count('emotions')
-            ).order_by('-like_count')[:num]
-    return {'posts':posts, 'post_list':'most_like'}
-
-@register.simple_tag
-def likeIcon(user, post):
-    if Emotion.objects.filter(user=user,post=post).count():
-        return 'unlike'
-    else:
-        return 'like'

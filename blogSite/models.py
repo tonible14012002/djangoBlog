@@ -68,16 +68,4 @@ class Comment(models.Model):
     class Meta:
         ordering = ['update', 'create']
 
-class Emotion(models.Model):
-    STATIC_CHOICE = (
-        ('like', 'Like'),
-        ('unlike', 'Unlike'),
-        ('love', 'Love'),
-        ('Haha', 'haha')
-    )
-    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='emotions')
-    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='emotion')
-    create = models.DateTimeField(auto_now_add=True)
-    emotion = models.CharField(choices=STATIC_CHOICE,default='like',max_length=10)
-    class Meta:
-        ordering = ['-create']
+
