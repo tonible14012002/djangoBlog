@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Profile, Photo
-from .form import RegistrationForm, UserEditForm, ProfileEditForm
+from .form import RegistrationForm, UserEditForm, ProfileEditForm, PostCreationForm
 from django.contrib import messages
 # Create your views here.
 
@@ -47,3 +47,17 @@ def profile_edit(request):
 
     context = {'user_form': user_form, 'profile_form': profile_form}
     return render(request,'account/profile/form/edit.html', context)
+
+@login_required
+def post_create(request):
+    if request.method == 'POST':
+        form = PostCreationForm(request.POST)
+        if form.is_valid():
+            newPost = form.save(commit=False)
+            newPost.author = request.user
+            newPost.save()
+            return redirect(newPost.get_absolute_url())
+    else:
+        form = PostCreationForm()
+    context = {'form':form}
+    return render(request,'account/profile/post_create.html', context)

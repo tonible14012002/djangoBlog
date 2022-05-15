@@ -3,6 +3,7 @@ from django import forms
 from django.forms import ModelForm, Form
 from django.contrib.auth.models import User
 from .models import Profile
+from blogSite.models import Post
 
 class RegistrationForm(ModelForm):
 
@@ -46,4 +47,8 @@ class ProfileEditForm(ModelForm):
     class Meta:
         model = Profile
         fields = [ 'avatar', 'date_of_birth',]
-        
+
+class PostCreationForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'body', 'status']

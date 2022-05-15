@@ -66,7 +66,6 @@ def post_detail(request,year,month,day,pk,slug):
 
 @login_required
 def post_like(request):
-
     if request.method == 'POST':
         data = json.loads(request.body)
         post_id = data['post_id']
@@ -77,16 +76,3 @@ def post_like(request):
         total = Emotion.objects.filter(post=post).count()
     return JsonResponse({'liked':created, 'total':total},status=200)
 
-@login_required
-def post_create(request):
-    if request.method == 'POST':
-        form = PostCreationForm(request.POST)
-        if form.is_valid():
-            newPost = form.save(commit=False)
-            newPost.author = request.user
-            newPost.save()
-            return redirect(newPost.get_absolute_url())
-    else:
-        form = PostCreationForm()
-    context = {'form':form}
-    return render(request,'blogSite/post/post_create.html', context)
