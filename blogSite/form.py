@@ -17,4 +17,4 @@ class ShareForm(forms.Form):
 class PostCreationForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ['title', 'body', 'status']

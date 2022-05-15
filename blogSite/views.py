@@ -1,4 +1,6 @@
 import json
+from django.contrib.auth.models import User
+
 from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core.paginator import Paginator, Page, \
@@ -19,12 +21,14 @@ class page_list(ListView):
     paginate_by = 3
 
 @login_required
-def post_detail(request,year,month,day,slug):
+def post_detail(request,year,month,day,pk,slug):
+    user = get_object_or_404(User,pk=pk)
     post = get_object_or_404(
         Post,
         slug=slug,
         publish__year = year,
         publish__month = month,
+        author = user,
         publish__day = day
     )
     sent = False
@@ -78,8 +82,10 @@ def post_create(request):
     if request.method == 'POST':
         form = PostCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect(request,'account:profile')
+            newPost = form.save(commit=False)
+            newPost.author = request.user
+            newPost.save()
+            return redirect(newPost.get_absolute_url())
     else:
         form = PostCreationForm()
     context = {'form':form}

@@ -2,7 +2,8 @@ from django.utils import timezone
 from django.db import models
 from django.forms import CharField
 from django.contrib.auth.models import User
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.template.defaultfilters import slugify
 # Create your models here.
 
 class PublishedManager(models.Manager):
@@ -42,9 +43,15 @@ class Post(models.Model):
                 self.publish.year,
                 self.publish.month,
                 self.publish.day,
+                self.author.pk,
                 self.slug
                 ]  
         )
+    
+    def save(self, *args, **kwags):
+        if not self.slug or not self.id:
+            self.slug = slugify(self.title)
+        super(Post,self).save(args, kwags)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
