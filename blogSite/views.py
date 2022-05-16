@@ -6,9 +6,9 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.core.paginator import Paginator, Page, \
     PageNotAnInteger, EmptyPage, InvalidPage
 from blog.settings import EMAIL_HOST_USER
-from .models import Post, Comment
+from .models import Post
 from django.views.generic.list import ListView
-from .form import CommentForm, PostCreationForm, ShareForm
+from .form import PostCreationForm, ShareForm
 from blogSite import form
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
@@ -35,15 +35,7 @@ def post_detail(request,year,month,day,pk,slug):
     if request.method == 'POST':
         if 'redirect' in request.POST:
             return redirect(post.get_absolute_url())
-        if 'comment' in request.POST:
-            commentForm = CommentForm(request.POST)
-            if commentForm.is_valid():
-                cmt = commentForm.save(commit=False)
-                cmt.post = post
-                cmt.save()
-                return redirect(post.get_absolute_url())
-        else:
-            commentForm = CommentForm()
+
         if 'share' in request.POST:
             emailForm = ShareForm(request.POST)
             if emailForm.is_valid():
@@ -57,10 +49,9 @@ def post_detail(request,year,month,day,pk,slug):
         else:
             emailForm = ShareForm()
     else:
-        commentForm = CommentForm()
         emailForm = ShareForm()
 
-    context = {'post':post, 'commentForm':commentForm,\
+    context = {'post':post,\
          'emailForm':emailForm, 'sent':sent}
     return render(request,'blogSite/post/post_detail.html',context)
 

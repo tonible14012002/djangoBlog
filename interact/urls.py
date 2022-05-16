@@ -4,4 +4,5 @@ from . import views
 app_name='interact'
 urlpatterns = [
     path('like/', views.post_like, name='post_like'),
+    path('comment/',views.post_comment, name='comment'),
 ]

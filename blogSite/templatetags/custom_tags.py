@@ -1,26 +1,27 @@
 from django import template
-from ..models import Post, Comment
+from ..models import Post
+# from interact.models import Comment
 from django.db.models import Q, Count
 
 register = template.Library()
 
-@register.simple_tag
-def comment_count(post):
-    return Comment.objects.filter(post=post).count()
+# @register.simple_tag
+# def comment_count(post):
+#     return Comment.objects.filter(post=post).count()
 
-@register.inclusion_tag('blogSite/post/feed.html')
-def mostCommentPost(num = 5, user=None):
-    if user:
-        posts = Post.published\
-            .filter(author=user)\
-            .annotate(comment_count=Count('comments'))\
-            .order_by('-comment_count')[:num]
-    else:
-        posts = Post.published\
-            .annotate(comment_count=Count('comments'))\
-            .order_by('-comment_count')[:num]
+# @register.inclusion_tag('blogSite/post/feed.html')
+# def mostCommentPost(num = 5, user=None):
+#     if user:
+#         posts = Post.published\
+#             .filter(author=user)\
+#             .annotate(comment_count=Count('comments'))\
+#             .order_by('-comment_count')[:num]
+#     else:
+#         posts = Post.published\
+#             .annotate(comment_count=Count('comments'))\
+#             .order_by('-comment_count')[:num]
 
-    return {'posts':posts, 'post_list':'most_comment'}
+#     return {'posts':posts, 'post_list':'most_comment'}
 
 @register.inclusion_tag('blogSite/post/feed.html')
 def  latestPost(num=5, user=None):

@@ -1,0 +1,7 @@
+
+    <h3>Comment</h3>
+    <form class="comment-form" data-postId="{{postid}}">
+        {% csrf_token %}
+        <input type="text" name="body">
+        <input type="submit" name="comment" value="COMMENT">
+    </form>  

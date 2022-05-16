@@ -1,12 +1,7 @@
 
 from dataclasses import fields
 from django import forms
-from .models import Comment, Post
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['name', 'body']
+from .models import Post
     
 
 class ShareForm(forms.Form):

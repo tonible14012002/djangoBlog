@@ -22,10 +22,10 @@
 
         <div class="commentpart" style="display: grid; grid-template-columns: 1fr 1fr;">
             <div class="commentform">
-                {% include 'blogSite/post/form/comment.html' with form=commentForm %}
+                {% include 'interact/form/comment.html' with postid=post.pk %}
             </div>
             <div class="email-share">
-                {% include 'blogSite/post/form/share.html' with form=emailForm %}
+                {% include 'interact/form/share.html' with form=emailForm %}
             </div>
         </div>
         <hr>
@@ -33,9 +33,7 @@
         <div class="commentlist">
             {% for comment in post.comments.all %}
                 <h3>{{comment}}</h3>
-                <ul style="list-style: none;">
-                    <li><small>{{comment.body}}</small></li>
-                </ul>
+                <p><small>{{comment.body}}</small></p>
             {% endfor %}
         </div>    
     </div>

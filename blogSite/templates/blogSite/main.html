@@ -5,9 +5,6 @@
 {% load interact_tags %}
 
 {% block app %}
-    <header>
-        <link rel="stylesheet" href="{% static 'blogSite/styles/main.css' %}">
-    </header>
 
     <div class="content" style="display: grid; grid-template-columns: 2fr 1fr;">
         <div class="list">
@@ -16,13 +13,7 @@
         </div>
 
         <div>
-            <h3>Lastest Posts:</h3>
-            {% latestPost 3 %}
-            <hr>
-            <h3>most Commented posts</h3>
-            {% mostCommentPost 3 %}
-            <h3>most Liked posts</h3>
-            {% mostLikePost 3 %}
+
         </div>
     </div>
 {% endblock %}
