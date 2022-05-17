@@ -41,9 +41,10 @@ def post_comment(request):
                             body=commentBody,
                             post=post
                             )
+            commentCount = Comment.objects.filter(post=post).count()
             response = {
-                "body":commentBody,
-                'username':request.user.profile.get_name()
+                'username':request.user.profile.get_name(),
+                'commentCount':commentCount
                 }
         return JsonResponse(response)
     except:

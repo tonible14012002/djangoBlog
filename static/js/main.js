@@ -1,6 +1,9 @@
 var button = document.getElementsByClassName('like-button')
 var commentForm = document.getElementsByClassName('comment-form')
 
+function isEmptyOrSpaces(str){
+    return str === null || str.match(/^ *$/) !== null;
+}
 
 // Ajax for like button
 for (let i = 0; i < button.length; i++){
@@ -41,25 +44,25 @@ function AjaxLike(post_id, button){
 for (let i = 0; i < commentForm.length; i++){
     commentForm[i].addEventListener('submit', function(e){
         e.preventDefault()
-        let formData = new FormData(this)
-        let data = {}
-        formData.forEach(function(value, key){
-            data[key] = value
+        let form = new FormData(this)
+        let formData = {}
+        form.forEach(function(value, key){
+            formData[key] = value
         })
         let postId = this.dataset.postid
-        data['postId'] = postId
+        formData['postId'] = postId
         if (user == 'AnonymousUser')
             alert('not logged in')
-        else if (data['body'])
-            ajaxComment(data)
+        else if (!isEmptyOrSpaces(formData['body']))
+            ajaxComment(formData)
     })    
 }
 
-function ajaxComment(data){
+function ajaxComment(formData){
     url = '/interact/comment/'
     fetch(url,{
         method:'POST',
-        body:JSON.stringify(data),
+        body:JSON.stringify(formData),
         headers:{
             'content_Type':'aplication/jason',
             'X-CSRFToken':csrftoken,
@@ -69,14 +72,27 @@ function ajaxComment(data){
     .then(response=>{
         return response.json()
     })
-    .then(data=>{
+    .then((data)=>{
         let commentLists = document.getElementsByClassName('commentlist')
         for(let i = 0; i < commentLists.length; i++){
-            let newComment = '<h3>' + String(data['username']) + '</h3>'
-            newComment += '<p>'+ String(data['body']) +'</P>'
-            commentLists[i].insertAdjacentHTML('afterbegin',newComment)
+            
+            //render new Comment
+            let username = document.createElement('h3')
+                username.innerText = data['username']
+            let newComment = document.createElement('p')
+                newComment.innerText = formData['body']
+        
+            commentLists[i].insertAdjacentElement('afterbegin',newComment)
+            commentLists[i].insertAdjacentElement('afterbegin',username)
+            
+            //clear input field
             let input = document.querySelector('.comment-form > input[name="body"]')
             input.value =''
+            
+            commentCountId = 'cmt-count-' + formData['postId']
+            commentCount = document.getElementById(commentCountId)
+            num = String(data['commentCount'])
+            commentCount.innerText = num + ' comments'
         }
     })
     .catch(function(){

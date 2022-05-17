@@ -15,7 +15,7 @@
                 updated on {{post.publish}} by <a href="{{post.author.profile.get_absolute_url}}">{{post.author.profile.get_name}}</a>
             {% endif %}
             <p>{{post.body|linebreaks}}</p>
-            <h5> {% comment_count post %} comments</h5>
+            <h5 id="cmt-count-{{post.pk}}"> {% comment_count post %} comments</h5>
             <input data-postid="{{post.pk}}" type="submit" class="like-button" value="{% totalLikes post %} {% likeIcon user post %}">
             <hr>
         </div>
