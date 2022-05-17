@@ -74,7 +74,9 @@ function ajaxComment(data){
         for(let i = 0; i < commentLists.length; i++){
             let newComment = '<h3>' + String(data['username']) + '</h3>'
             newComment += '<p>'+ String(data['body']) +'</P>'
-            commentLists[i].insertAdjacentHTML('beforebegin',newComment)
+            commentLists[i].insertAdjacentHTML('afterbegin',newComment)
+            let input = document.querySelector('.comment-form > input[name="body"]')
+            input.value =''
         }
     })
     .catch(function(){
